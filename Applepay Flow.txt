@@ -1,0 +1,62 @@
+
+Create apple pay merchant identifier
+	Merchant ID - Bank has to register with Apple and get unique merchant id and use it for payments. This ID never expires, and you can use it in multiple websites and iOS apps.
+
+
+Create a certificate to secure transaction data - Payment processing certificate
+Apple Pay servers use the certificate’s public key to encrypt payment data. You (or your payment service provider) use the private key to decrypt the data to process payments.
+
+Once authentiation completed we will receive encrypted payload.
+
+Merchant identity certificate. A Transport Layer Security (TLS) certificate associated with your merchant ID, used to authenticate your sessions with the Apple Pay servers. The merchant identity certificate is only required for Apple Pay on the web
+CSR - certificate signing request 
+3 ways-
+openssl
+keytool
+portecle
+
+merchant can get CSR file
+merchant should upload in apple pay portal and then can download .cer file and use it for handshake
+
+In Outbound server, we should keep certificate in keystore.bin and we get with aliase name or we can keep separate file for applepay. 
+
+PG to Outbound server
+TCP/IP Http connection
+Outbound to applepay
+Https connection with certificate validation
+
+
+
+Handshake purpose while connecting with apple pay server
+
+Domain verification certification - We will get .txt file which has encrypted data, we should keep file in our domain server and then we can find verify domain button in apple pay portal. Once initiate the button, Apple pay portal will check file in our domain and confirms the verification.
+
+
+
+Tranportal - merchant will do these steps until authenication.
+Hosted means we should do all these steps
+
+device-specific account number (DPAN)
+signature 
+eci indicator
+
+window.ApplePaySession
+ApplePaySession.canMakePayments()
+along with merchant and transactions detils
+session.begin();
+session.onvalidatemerchant 
+performValidation(event.validationURL);
+session.completeMerchantValidation(obj);
+session.onpaymentauthorized
+ 
+promise = sendPaymentToken(event.payment.token);
+  				/* promise.then(function (success) {
+  				 */
+  				 console.log("promise:> "+promise);
+  				 var status;
+  				 /* if(promise!=''){ */ 
+  					if (promise)
+  						status = ApplePaySession.STATUS_SUCCESS;
+  					else
+  						status = ApplePaySession.STATUS_FAILURE;
+  					  session.completePayment(status);
