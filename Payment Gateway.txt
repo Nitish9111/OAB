@@ -1,0 +1,1161 @@
+What is a Payment Gateway?
+
+A Payment Gateway is a technology that enables secure online payment transactions between customers, merchants, banks, and payment processors. It acts as an intermediary that authorizes, encrypts, and processes payments made through credit cards, debit cards, UPI, net banking, wallets, and other digital payment methods.
+
+Detailed Interview Answer:
+
+"A Payment Gateway is a service that securely processes online payments by connecting the customer, merchant application, acquiring bank, card networks, and issuing bank. When a customer initiates a payment, the payment gateway encrypts the payment information, validates the transaction, communicates with the banking network for authorization, and returns the payment status to the application. It ensures secure, fast, and reliable payment processing while protecting sensitive customer data."
+
+Payment Gateway Flow:
+
+Customer places an order.
+Customer selects a payment method.
+Payment Gateway encrypts payment details.
+Transaction request is sent to the acquiring bank.
+Bank communicates with card network/UPI network.
+Issuing bank validates the transaction.
+Approval or decline response is returned.
+Payment Gateway sends the final status to the merchant application.
+Order is confirmed if payment is successful.
+As a Testing Engineer
+
+You can explain your involvement like this:
+
+"As a Testing Engineer, I validate end-to-end payment flows such as payment success, failure, timeout, refund, cancellation, and payment status reconciliation. I verify the API requests and responses exchanged with the payment gateway, validate transaction records in the database, check callback/webhook responses, and ensure that payment status is updated correctly in the application."
+
+Common Payment Gateway Test Scenarios
+Successful payment
+Failed payment due to insufficient funds
+Invalid card details
+Payment timeout
+User cancellation during payment
+Duplicate transaction handling
+Refund processing
+Network interruption during payment
+Callback/response validation
+Reconciliation of transaction status
+Popular Payment Gateways
+Razorpay
+PayU
+Cashfree
+Stripe
+PayPal
+Authorize.Net
+
+30-Second Interview Answer
+
+"A Payment Gateway is a secure service that facilitates online payments between customers, merchants, and banks. It encrypts payment information, processes transactions, obtains authorization from banks, and returns the payment status to the application. As a Testing Engineer, I validate payment flows, API responses, transaction records, and various payment scenarios such as success, failure, refunds, and cancellations to ensure a seamless and secure payment experience."
+
+Detailed Explanation of Your Role as a Testing Engineer in Payment Gateway Testing
+1. End-to-End Payment Flow Validation
+
+What I do:
+
+I verify that the complete payment journey works correctly from the moment a customer clicks "Pay Now" until the transaction is completed and the order status is updated.
+
+Example Flow:
+
+User selects a product.
+User proceeds to checkout.
+User chooses a payment method (Card/UPI/Net Banking).
+Application redirects to the Payment Gateway.
+User enters payment details.
+Bank authorizes the payment.
+Success/Failure response is received.
+Application updates order status accordingly.
+
+Interview Answer:
+
+"I perform end-to-end testing of payment transactions to ensure that payment requests are successfully sent to the payment gateway, processed by the bank, and the final status is correctly reflected in the application."
+
+2. Payment Success Scenario Testing
+
+What I Validate:
+
+Payment completed successfully.
+Transaction ID generated.
+Order status updated as "Paid".
+Confirmation email/SMS triggered.
+Entry created in the database.
+
+Example:
+
+Customer pays ₹500 through UPI.
+
+Expected Result:
+
+Payment Success message displayed.
+Order created.
+Payment status updated to SUCCESS.
+Transaction reference number generated.
+
+Interview Explanation:
+
+"I verify whether successful payments result in correct order creation, transaction recording, and user notifications."
+
+3. Payment Failure Testing
+
+Possible Failure Cases:
+
+Insufficient balance.
+Invalid card number.
+Wrong CVV.
+Expired card.
+Bank server failure.
+
+Validation:
+
+Proper error message displayed.
+Order not created.
+Payment status marked FAILED.
+No duplicate transactions occur.
+
+Interview Explanation:
+
+"I ensure payment failures are handled gracefully and users receive meaningful error messages while maintaining data consistency."
+
+4. Payment Timeout Testing
+Scenario
+
+User completes payment at the bank side but loses internet connectivity before receiving the response.
+
+Validation
+Transaction eventually updates.
+Payment reconciliation works.
+User is not charged multiple times.
+
+Interview Answer:
+
+"I test timeout scenarios to ensure that delayed responses from the bank or payment gateway do not result in duplicate payments or incorrect order statuses."
+
+5. Refund Testing
+What I Verify
+Refund request initiated successfully.
+Refund amount is correct.
+Refund transaction ID generated.
+Refund status updated.
+Example
+
+Original Payment = ₹1000
+
+Refund = ₹1000
+
+Expected:
+
+Refund processed.
+Status changed to REFUNDED.
+Customer receives notification.
+
+Interview Explanation:
+
+"I validate both full and partial refund flows and confirm that refund details are updated correctly in the database and UI."
+
+6. Cancellation Testing
+Scenario
+
+Customer cancels payment before completion.
+
+Validation
+Order status becomes CANCELLED.
+No payment deduction.
+No successful transaction record created.
+
+Interview Answer:
+
+"I verify that payment cancellation scenarios are handled correctly without affecting order or transaction integrity."
+
+7. API Testing
+
+Payment gateways communicate through APIs.
+
+What I Validate
+Request Validation
+
+Verify fields such as:
+
+JSON
+1
+{
+2
+"amount":500,
+3
+"currency":"INR",
+4
+"customerId":"12345"
+5
+}
+Show more lines
+Response Validation
+JSON
+1
+{
+2
+"status":"SUCCESS",
+3
+"transactionId":"TXN12345"
+4
+}
+Show more lines
+Checks
+HTTP status codes.
+Request payload.
+Response payload.
+Authentication tokens.
+Error handling.
+
+Interview Explanation:
+
+"I use tools like Postman to validate payment gateway API requests and responses, ensuring that transaction details are transmitted accurately."
+
+8. Database Validation
+
+After every payment transaction, data should be stored correctly.
+
+Example Query Validation
+
+Check:
+
+Transaction ID
+Amount
+Payment Status
+Timestamp
+Customer ID
+
+Interview Answer:
+
+"I perform database testing to verify that transaction details stored in PostgreSQL or other databases match the information displayed in the application."
+
+9. Callback/Webhook Validation
+What is a Callback?
+
+After processing a payment, the gateway sends a callback (webhook) to notify the merchant about the transaction result.
+
+Example
+
+Gateway sends:
+
+JSON
+1
+{
+2
+"transactionId":"TXN123",
+3
+"status":"SUCCESS"
+4
+}
+5
+``
+Show more lines
+Validation
+Callback received.
+Signature validation successful.
+Order status updates correctly.
+
+Interview Explanation:
+
+"I verify webhook notifications from payment gateways and ensure the application processes them correctly to update transaction statuses."
+
+10. Reconciliation Testing
+What is Reconciliation?
+
+Matching transactions between:
+
+Application database
+Payment gateway
+Bank records
+Example
+
+Bank says:
+
+Transaction	StatusTXN1001	Success
+
+Application says:
+
+Transaction	StatusTXN1001	Failed
+
+This is a reconciliation issue.
+
+Validation
+Detect mismatch.
+Correct status update.
+Ensure financial accuracy.
+
+Interview Answer:
+
+"I validate reconciliation reports to ensure transaction statuses match across the application, payment gateway, and banking systems."
+
+11. Duplicate Transaction Testing
+Scenario
+
+User clicks "Pay Now" multiple times.
+
+Validation
+Only one payment is processed.
+Duplicate orders are not created.
+Duplicate transaction prevention logic works.
+
+Interview Answer:
+
+"I verify that multiple clicks or repeated requests do not create duplicate transactions or orders."
+
+Complete Interview Answer
+
+"As a Testing Engineer, I am responsible for validating the complete payment gateway integration. I test payment success, failure, timeout, cancellation, refund, and reconciliation scenarios. I validate API requests and responses using tools like Postman, verify transaction data stored in the database using SQL queries, and ensure callback/webhook responses update the application correctly. I also test duplicate transaction prevention, error handling, and financial data integrity to ensure a secure and reliable payment experience for users."
+
+Project Introduction
+
+"I have around 4 years of experience as a Testing Engineer, primarily working in the Payments domain. I have been involved in two major projects, FAB and OAB, where I worked as part of the Payment Gateway Testing Team. My role involved validating end-to-end payment processing, API testing, database validation, integration testing, and ensuring secure and reliable transaction processing."
+
+About the FAB Project
+
+"FAB is a banking/payment application where customers perform financial transactions through multiple payment channels. The application integrates with various payment gateways, banks, and third-party services to process transactions securely."
+
+Responsibilities
+Requirement analysis and test case preparation.
+Functional and integration testing.
+Payment gateway validation.
+API testing using Postman.
+Database validation using SQL queries.
+Defect tracking and reporting.
+Regression and SIT testing.
+Payment reconciliation validation.
+Payment Scenarios Tested
+Successful payments.
+Failed transactions.
+Payment timeout scenarios.
+Reversals and refunds.
+Duplicate transaction prevention.
+Status reconciliation between application and payment gateway.
+About the OAB Project
+
+"OAB is a digital banking onboarding platform where customers can open accounts and perform banking activities through online channels. The application integrates with multiple backend systems and payment services."
+
+Responsibilities:
+
+End-to-end workflow testing.
+User onboarding validation.
+Payment-related transaction testing.
+Backend API validation.
+Database verification.
+Integration testing with external systems.
+Defect analysis and retesting.
+Key Areas Tested
+Account creation workflow.
+KYC validation.
+Payment processing integration.
+Transaction status updates.
+Notification validation.
+Data synchronization between systems.
+Your Payment Gateway Experience
+
+"As part of the Payment Gateway team, I worked extensively on validating the complete transaction lifecycle. Whenever a customer initiates a payment, I verify whether the request reaches the payment gateway correctly, the bank authorization is successful, and the final transaction status is correctly returned and updated in the application."
+
+I Tested:
+Credit card payments
+Debit card payments
+UPI transactions
+Net banking payments
+Wallet payments
+Refund processing
+Transaction reversals
+Callbacks/Webhooks
+Settlement and reconciliation
+API Testing Experience
+
+"I validated payment APIs using Postman by verifying request payloads, response payloads, status codes, authentication mechanisms, and error handling scenarios."
+
+Example:
+
+Validate transaction amount.
+Verify transaction ID generation.
+Check success and failure responses.
+Validate gateway callback responses.
+Database Testing Experience
+
+"I performed backend validation by executing SQL queries to verify payment records, transaction statuses, customer details, timestamps, and reconciliation data."
+
+I verified:
+
+Transaction ID
+Payment status
+Reference numbers
+Refund details
+Audit records
+Defect Handling
+
+"During testing, I identified defects related to transaction failures, incorrect status updates, duplicate payments, timeout handling, and data mismatches. I logged defects in Jira, worked closely with developers and business teams, and verified fixes during retesting."
+
+
+How I Worked in Agile Methodology
+
+"In both FAB and OAB projects, we followed Agile Scrum methodology. We worked in 2-week sprints. As a QA Engineer, I participated in sprint planning, backlog grooming, daily stand-ups, test execution, defect tracking, regression testing, sprint review, and retrospective meetings."
+
+Agile Activities I Performed
+1. Sprint Planning
+
+Purpose: Understand the stories planned for the sprint.
+
+My role:
+
+Analyze user stories.
+Understand business requirements.
+Identify test scenarios.
+Estimate testing effort.
+Raise clarifications with Business Analysts and Product Owners.
+
+Interview Example:
+
+"During sprint planning, I reviewed payment-related user stories such as UPI payments, refunds, or transaction reconciliation and estimated the testing effort."
+
+2. Backlog Grooming (Refinement)
+
+Purpose: Clarify future sprint requirements.
+
+My role:
+
+Review upcoming stories.
+Identify dependencies.
+Clarify acceptance criteria.
+Suggest missing test scenarios.
+
+Example: If the story is about payment refund functionality, I would discuss:
+
+Full refund
+Partial refund
+Failed refund
+Duplicate refund requests
+3. Test Case Design
+
+After requirements are finalized:
+
+I prepared:
+
+Functional test cases
+Negative test cases
+Integration test cases
+API test cases
+Regression test cases
+
+For Payment Gateway Example:
+
+Positive:
+
+Successful UPI payment
+
+Negative:
+
+Invalid VPA
+Insufficient balance
+Session timeout
+
+Edge Cases:
+
+Multiple clicks on Pay button
+Network interruption
+4. Daily Stand-up Meeting
+
+Purpose: Share progress and blockers.
+
+Typical update:
+
+Yesterday I completed API testing for refund functionality. Today I'll validate webhook callbacks. No blockers.
+
+or
+
+I am blocked because the payment gateway test environment is unavailable.
+
+Functional Testing
+What is Functional Testing?
+
+Verifying that the application works according to requirements.
+
+Example
+
+Requirement: User pays ₹1000 through UPI.
+
+Verify:
+
+Payment page opens.
+Correct amount displayed.
+Transaction completed.
+Success message displayed.
+
+Interview Statement:
+
+"I validated whether the payment functionality behaved according to the business requirements."
+
+Integration Testing
+What is Integration Testing?
+
+Verifying communication between integrated systems.
+
+In payment applications:
+
+Plain Text
+1
+Application
+2
+↓
+3
+Payment Gateway
+4
+↓
+5
+Bank
+6
+↓
+7
+Response
+8
+↓
+9
+Application
+Show more lines
+What I Validate
+Request reaches gateway.
+Gateway reaches bank.
+Response comes back successfully.
+Application updates status correctly.
+
+Interview Statement:
+
+"I performed integration testing to ensure seamless communication among merchant applications, payment gateway services, and banking systems."
+
+API Testing
+Why?
+
+Payment systems heavily depend on APIs.
+
+Tools
+Postman
+Swagger
+What I Validate
+Request
+JSON
+1
+{
+2
+"amount":1000,
+3
+"currency":"INR"
+4
+}
+Show more lines
+Response
+JSON
+1
+{
+2
+"status":"SUCCESS",
+3
+"transactionId":"TXN12345"
+4
+}
+Show more lines
+Checks
+Status codes
+Request parameters
+Response fields
+Authentication
+Error messages
+
+Interview Statement:
+
+"I validated APIs using Postman to ensure accurate request and response processing between applications and payment gateway systems."
+
+Database Testing
+Why?
+
+Every transaction should be stored correctly.
+
+What I Validate
+Transaction ID
+Amount
+Customer ID
+Payment Status
+Timestamp
+Example Query
+SQL
+1
+SELECT *
+2
+FROM payment_transaction
+3
+WHERE transaction_id='TXN12345';
+Show more lines
+Verify
+UI amount matches DB.
+Status matches DB.
+Refund details updated.
+
+Interview Statement:
+
+"I executed SQL queries to validate backend transaction data and ensure consistency between the application and database."
+
+Defect Management
+What Happens?
+
+If testing fails:
+
+Reproduce issue.
+Collect logs/screenshots.
+Create Jira ticket.
+Assign to developer.
+Retest after fix.
+Close defect.
+Example Defect
+
+Issue: Payment succeeded but application displayed failure.
+
+Impact: Customer confusion and transaction mismatch.
+
+My Action:
+
+Logged Jira defect.
+Attached API logs.
+Verified after fix.
+Payment Success Testing
+Verify
+
+✅ Amount deducted
+
+✅ Success response received
+
+✅ Order created
+
+✅ Database updated
+
+✅ Confirmation sent
+
+Payment Failure Testing
+Scenarios
+Insufficient funds
+Invalid card
+Incorrect CVV
+Bank declined
+Verify
+
+✅ Proper error message
+
+✅ No duplicate transactions
+
+✅ Failure status stored
+
+Timeout Testing
+Scenario
+
+Customer completes payment but response is delayed.
+
+Verify
+
+✅ No duplicate charge
+
+✅ Reconciliation updates status
+
+✅ User informed appropriately
+
+Refund Testing
+Types
+
+Full Refund
+
+Plain Text
+1
+Payment = ₹1000
+2
+Refund = ₹1000
+Show more lines
+
+Partial Refund
+
+Plain Text
+1
+Payment = ₹1000
+2
+Refund = ₹500
+Show more lines
+Verify
+
+✅ Correct refund amount
+
+✅ Refund status updated
+
+✅ Refund transaction created
+
+Webhook/Callback Validation
+What Is It?
+
+Payment gateway sends final transaction status to application.
+
+Example:
+
+JSON
+1
+{
+2
+"transactionId":"TXN123",
+3
+"status":"SUCCESS"
+4
+}
+Show more lines
+Verify
+
+✅ Callback received
+
+✅ Signature validated
+
+✅ Status updated in database
+
+✅ UI reflects updated status
+
+Reconciliation Testing
+Purpose
+
+Compare transaction status across:
+
+Plain Text
+1
+Application
+2
+Payment Gateway
+3
+Bank
+Show more lines
+Example
+Transaction	Bank	ApplicationTXN1001	Success	Failed
+
+This mismatch must be corrected.
+
+Interview Statement:
+
+"I validated reconciliation reports to ensure transaction consistency between the application, payment gateway, and banking systems."
+
+Regression Testing
+Why?
+
+Whenever a new feature is introduced.
+
+Example:
+
+A new UPI payment feature is released.
+
+I retest:
+
+Card payments
+Net banking
+Refunds
+Existing UPI flows
+
+To ensure no existing functionality is broken.
+
+Sprint Review
+
+At the end of the sprint:
+
+Demonstrate completed stories.
+Share testing results.
+Discuss defects.
+Present test coverage.
+Retrospective
+
+Discuss:
+
+What went well.
+Challenges faced.
+Improvements for next sprint.
+
+Example:
+
+"We identified delays due to unstable payment gateway environments and suggested earlier environment validation before sprint testing."
+
+Complete Interview Answer
+
+"In FAB and OAB projects, we followed Agile Scrum methodology with two-week sprints. I participated in sprint planning, backlog refinement, daily stand-ups, sprint reviews, and retrospectives. My responsibilities included analyzing user stories, preparing test cases, executing functional, integration, API, database, and regression testing. As part of the Payment Gateway team, I validated payment success, failure, timeout, refund, cancellation, callback, and reconciliation scenarios. I used Postman for API testing, SQL for database validation, and Jira for defect tracking. I collaborated closely with developers, business analysts, and product owners to ensure high-quality and reliable payment processing functionality."
+
+
+                                             Payment Gateway Question and Answer  
+
+1.Which transaction is identified when Acquirer and issuer bank are Identical. Acquirer bank and issuer bank are the same. 
+
+A. Entered Transaction  
+
+B. ON-US Transaction  
+
+C. OFF-US Transaction  
+
+D. Manual Transaction  
+
+Answer:  B. ON-US Transaction  
+
+2.What is the Standard form of ACS? 
+
+A. Access control server  
+
+B. Access Controller server  
+
+C. Access Certified server  
+
+D. Access Certified Server  
+
+Answer:  A. Access control server  
+
+3.Which portal do we have to download the Resource file.  
+
+A. Super Admin  
+
+B. Bank Portal  
+
+C. Merchant Portal  
+
+D. Admin portal  
+
+Answer: C. Merchant Portal  
+
+4.What happens if a transaction violates the risk rules?  
+
+A. The transaction is approved. 
+
+B. The transaction is rejected.  
+
+C. The transaction is put on hold.  
+
+D. The transaction is flagged for review.  
+
+Answer: B. The transaction is rejected. 
+
+ 
+
+5.Which of the following is a card-based risk parameter?  
+
+A. Max daily processing amount  
+
+B. Max 24hr debit amount  
+
+C. Max transaction count daily  
+
+D. Device Fingerprinting  
+
+Answer: A. Max daily processing amount  
+
+6. Which option should be enabled in the terminal module when performing 3DS transaction?  
+
+A. OTP  
+
+B. VPAS  
+
+C. Prepaid  
+
+D. None of the above  
+
+Answer: B. VPAS 
+
+7. What are the major input fields that are applicable in a payment page?   
+
+A. Card Number, CVV, Expiry Date 
+
+B. Card Number, CVV, Amount, Payment ID 
+
+C. Card Number, CVV, Expiry Date, Card Holders Name 
+
+D. None of the Above 
+
+Answer: C. Card Number, CVV, Expiry Date, Card Holders Name 
+
+8. Which are the Message versions that are supported by FSS Payment Gateway?   
+
+A. Swift 
+
+B. ISO20022 
+
+C. ISO8583 version 1987 
+
+D. ISO8583 version 1977 
+
+Answer: C. ISO8583 version 1987 
+
+ 
+
+9. What is meant by Faster checkout Transaction?  
+
+A. Performing transaction using a faster checkout card.  
+
+B. Performing transactions using registered cards.  
+
+C. Performing transaction using registered faster checkout card.  
+
+D. None of the above.  
+
+Answer: B. Performing transactions using registered cards 
+
+ 
+
+10. Which of the following is an example of an OFF-US transaction?  
+
+A. Using an SBI card at an SBI ATM.  
+
+B. Using an SBI card at an ICICI ATM.  
+
+C. Using an ICICI card at an ICICI ATM.  
+
+D. Using a Visa card at a MasterCard ATM.  
+
+Answer: B. Using an SBI card at an ICICI ATM. 
+
+ 
+
+11. What is the function of Interchange Directory servers during a 3D Secure transaction?  
+
+A. To authorize the transaction.  
+
+B. To check if the BIN is enrolled for the Interchange.  
+
+C. To process the payment.  
+
+D. To decline the transaction.  
+
+Answer: B. To check if the BIN is enrolled for the Interchange. 
+
+12. Which of the following is NOT an Interchange Directory server?  
+
+A. Visa  
+
+ B. Master/Maestro  
+
+C. Dinners  
+
+D. PayPal  
+
+Answer: D. PayPal  
+
+13. What format does the Switch application understand for processing card-related payments?  
+
+A. XML  
+
+B. JSON  
+
+C. ISO Message format  
+
+D. HTML  
+
+Answer: C. ISO Message format. 
+
+14. What is the primary function of a Payment Gateway ?  
+
+A. To issue credit cards to customers.  
+
+B. To provide real-time processing of Credit/Debit card transactions between websites and banks.  
+
+C. To manage customer databases for e-commerce businesses.  
+
+D. To provide marketing services for online retailers.  
+
+Answer: B. To provide real-time processing of Credit/Debit card transactions between websites and banks.  
+
+15. What role does the Issuer play in a payment transaction?  
+
+A. It manages the merchant's business account.  
+
+B. It is the financial institution that issues cards to customers.  
+
+C. It processes the settlement and reconciliation of funds for the merchant.  
+
+D. It operates the Payment Gateway.  
+
+Answer: B. It is the financial institution that issues cards to customers.  
+
+16. What is a "Scheme" in the context of payment processing?  
+
+A. The process of integrating the merchant with the Payment Gateway.  
+
+B. A BIN sponsor for the card issued by a financial institution.  
+
+C. A method for encrypting customer data during transactions.  
+
+D. A loyalty program for frequent online shoppers. 
+
+ Answer: B. A BIN sponsor for the card issued by a financial institution. 
+
+17. What is Brand Type?  
+
+A. Brand Type is used to configure brand details of only domestic cards.  
+
+B. Brand Type is used to configure brand details of different cards such as VISA, MASTER, AMEX, Rupay, Dinners and Maestro.   
+
+C. Brand Type is used to configure brand details of only international cards.  
+
+D. All the above  
+
+Answer: B. Brand Type is used to configure brand details of different cards such as VISA, MASTER, AMEX, Rupay, Dinners and Maestro.   
+
+18. What does the Encryption type DEK do?  
+
+A. DEK is used to encrypt the PIN of users.   
+
+B. DEK is used to encrypt KEK.  
+
+C. DEK is used to protect two key store passwords.  
+
+D. DEK is used to encrypt card numbers.  
+
+Answer: D. DEK is used to encrypt card numbers. 
+
+19. What are the key benefits provided in Payment Gateway?  
+
+A. Faster payment processing.  
+
+B. Accepts credit and debit cards on PG payment page.  
+
+C. Payments can be done securely over internet.  
+
+D. All the above. 
+
+Answer: D. All the above.  
+
+20. What is VPAS Merchant?  
+
+A. A Merchant is said to be VPAS Merchant when all the transactions are being processed.  
+
+B. A Merchant is said to be VPAS Merchant if it is enabled with non-3D secure transactions.  
+
+C. A Merchant is said to be VPAS Merchant if it is enabled with 3D secure transactions  
+
+D. A Merchant is said to be VPAS Merchant if it is disabled with 3D secure transactions  
+
+Answer: C.  A Merchant is said to be VPAS Merchant if it is enabled with 3D secure transactions  
+
+21. Which one of the following does the Resource File contains?  
+
+A. Resource File contains tranportal Id and tranportal Password  
+
+B. Resource File contains Merchant related details.  
+
+C. Resource File contains Brand details of a terminal.  
+
+D. None of the above.  
+
+Answer: A. Resource File contains tranportal Id and tranportal Password  
+
+22.Which of the following is NOT a requirement to on-board a merchant?  
+
+A. Create a merchant category code   
+
+B. Configure risk parameters  
+
+C. Hire a marketing team  
+
+D. Register a merchant for 3D secure, if required  
+
+Answer: C. Hire a marketing team  
+
+23.What is the purpose of the ‘Enable CVD2/CVV’ flag?  
+
+A. To enable or disable chargeback for transactions  
+
+B. To authenticate the CVV/CVD2 value  
+
+C. To select the currency code of the merchant  
+
+D. To specify the merchant’s website address  
+
+Answer: B. To authenticate the CVV/CVD2 value  
+
+24.What is the purpose of a terminal in an e-commerce setup?  
+
+A. To manage inventory  
+
+B. To process transactions  
+
+C. To handle customer support  
+
+D. To create marketing campaigns  
+
+Answer: B. To process transactions  
+
+ 25.What does the ‘Connectivity Flag’ determine?   
+
+A. Whether to enable faster checkout  
+
+B. Whether to connect to Switch/Schemes 
+
+C. Whether to enable risk alerts  
+
+D. Whether to enable Rupay transactions  
+
+Answer: B. Whether to connect to Switch/Schemes 
+
+26. What is the currency code of INR? 
+
+A. 356 
+
+B. 512  
+
+C. 840 
+
+D. 784 
+
+Answer: A. 356 
+
+27. What is the Main Transaction PG have? 
+
+A. Purchase & Credit  
+
+B. Inquiry & Authorization  
+
+C. Purchase & Authorization  
+
+D. Inquire & Purchase  
+
+Answer: C. Purchase & Authorization  
+
+ 
+
+28. Select the Online Transaction   
+
+A. Hosted  
+
+B. Tranportal  
+
+C. Posted  
+
+D. A&B  
+
+Answer: D. A&B  
+
+  
+
+29. What response code we get for Transaction is getting success?  
+
+A. 0200  
+
+B. 0210 
+
+C. 00  
+
+D. None of these  
+
+Answer: C. 00  
+
+ 
+
+30.What happens after clicking ‘Save’ to create a merchant?  
+
+A. The merchant is deleted  
+
+B. A welcome email is sent to the contact person’s email address  
+
+C. The merchant is logged out  
+
+D. The merchant’s status is changed to inactive  
+
+Answer: B. A welcome email is sent to the contact person’s email address  
+
+  
+
+  
+
+  
+
+ 
+
+ 
